@@ -117,7 +117,6 @@ namespace KatlaSport.WebApi.Controllers
         {
             await _hiveService.DeleteHiveAsync(hiveId);
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
-
         }
     }
 }
