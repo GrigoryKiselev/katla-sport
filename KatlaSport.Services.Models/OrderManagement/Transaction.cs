@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace KatlaSport.DataAccess.OrderStore
+namespace KatlaSport.Services.OrderManagement
 {
-    public class StoreTransaction
+    public class Transaction
     {
         /// <summary>
         /// Gets or sets transaction id.
@@ -23,20 +23,5 @@ namespace KatlaSport.DataAccess.OrderStore
         /// Gets or sets transaction id.
         /// </summary>
         public int TotalSumm { get; set; }
-
-        /// <summary>
-        /// Gets or sets a store hive ID.
-        /// </summary>
-        public int StoreOrderId { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether a hive is deleted.
-        /// </summary>
-        public bool IsDeleted { get; set; }
-
-        /// <summary>
-        /// Gets or sets a store hive.
-        /// </summary>
-        public virtual StoreOrder StoreOrder { get; set; }
     }
 }

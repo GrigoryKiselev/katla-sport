@@ -1,8 +1,9 @@
-﻿using System;
-
-namespace KatlaSport.Services.OrderManagment
+﻿namespace KatlaSport.Services.OrderManagement
 {
-    public class Transaction
+    /// <summary>
+    /// Represents a request for creating and updating a hive.
+    /// </summary>
+    public class UpdateTransactionRequest
     {
         /// <summary>
         /// Gets or sets transaction id.
@@ -13,11 +14,6 @@ namespace KatlaSport.Services.OrderManagment
         /// Gets or sets order identifier.
         /// </summary>
         public int BankAccountId { get; set; }
-
-        /// <summary>
-        /// Gets or sets a date of the order.
-        /// </summary>
-        public DateTime PaymentDate { get; set; }
 
         /// <summary>
         /// Gets or sets transaction id.
