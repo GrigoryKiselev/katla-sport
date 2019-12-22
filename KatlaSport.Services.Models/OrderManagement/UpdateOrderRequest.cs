@@ -6,18 +6,18 @@
     public class UpdateOrderRequest
     {
         /// <summary>
-        /// Gets or sets a store Order name.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
         /// Gets or sets a store hive code.
         /// </summary>
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets a store hive address.
+        /// Gets or sets transaction id.
         /// </summary>
-        public string Address { get; set; }
+        public int TransactionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets transaction id.
+        /// </summary>
+        public int Price { get; set; }
     }
 }

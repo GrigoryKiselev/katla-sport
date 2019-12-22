@@ -2,6 +2,9 @@ namespace KatlaSport.DataAccess.Migrations
 {
     using System.Data.Entity.Migrations;
 
+    /// <summary>
+    /// i
+    /// </summary>
     public partial class Name2 : DbMigration
     {
         public override void Up()

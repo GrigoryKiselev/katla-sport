@@ -28,6 +28,8 @@ namespace KatlaSport.Services.OrderManagement
         /// <returns>A <see cref="Task{Transaction}"/>.</returns>
         Task<Transaction> CreateTransactionAsync(UpdateTransactionRequest createRequest);
 
+        Task<List<TransactionListItem>> GetTransactionsAsync(int orderId);
+
         /// <summary>
         /// Updates an existed transaction.
         /// </summary>
