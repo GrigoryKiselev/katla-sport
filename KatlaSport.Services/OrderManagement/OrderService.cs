@@ -124,7 +124,6 @@ namespace KatlaSport.Services.OrderManagement
             {
                 dbOrder.IsDeleted = deletedStatus;
                 dbOrder.LastUpdated = DateTime.UtcNow;
-                dbOrder.LastUpdatedBy = _userContext.UserId;
                 await _context.SaveChangesAsync();
             }
         }

@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a context for order store domain.
     /// </summary>
-    public interface IOrderStoreContext
+    public interface IOrderStoreContext : IAsyncEntityStorage
     {
         /// <summary>
         /// Gets a set of <see cref="OrderItem"/> entities.

@@ -1,12 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
+using DataAccessOrder = KatlaSport.DataAccess.OrderStore.StoreOrder;
+using DataAccessTransaction = KatlaSport.DataAccess.OrderStore.StoreTransaction;
 
 namespace KatlaSport.Services.OrderManagement
 {
-    class OrderManagementMappingProfile
+    public sealed class OrderManagementMappingProfile : Profile
     {
+        public OrderManagementMappingProfile()
+        {
+            CreateMap<DataAccessOrder, OrderListItem>();
+            CreateMap<DataAccessOrder, Order>();
+            CreateMap<DataAccessTransaction, TransactionListItem>();
+            CreateMap<DataAccessTransaction, Transaction>();
+            CreateMap<UpdateOrderRequest, DataAccessOrder>()
+            .ForMember(r => r.LastUpdated, opt => opt.MapFrom(p => DateTime.UtcNow));
+            CreateMap<UpdateTransactionRequest, DataAccessTransaction>();
+        }
     }
 }
