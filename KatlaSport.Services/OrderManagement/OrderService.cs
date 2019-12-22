@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using KatlaSport.DataAccess;
 using KatlaSport.DataAccess.OrderStore;
-using DbHive = KatlaSport.DataAccess.OrderStore.StoreOrder;
+using DbOrder = KatlaSport.DataAccess.OrderStore.StoreOrder;
 
 namespace KatlaSport.Services.OrderManagement
 {
@@ -52,82 +52,79 @@ namespace KatlaSport.Services.OrderManagement
         /// <inheritdoc/>
         public async Task<Order> CreateOrderAsync(UpdateOrderRequest createRequest)
         {
-            var dbHives = await _context.Orders.Where(h => h.Code == createRequest.Code).ToArrayAsync();
-            if (dbHives.Length > 0)
+            var dbOrders = await _context.Orders.Where(h => h.Code == createRequest.Code).ToArrayAsync();
+            if (dbOrders.Length > 0)
             {
                 throw new RequestedResourceHasConflictException("code");
             }
 
-            var dbHive = Mapper.Map<UpdateOrderRequest, DbHive>(createRequest);
-            dbHive.CreatedBy = _userContext.UserId;
-            dbHive.LastUpdatedBy = _userContext.UserId;
-            _context.Hives.Add(dbHive);
+            var dbOrder = Mapper.Map<UpdateOrderRequest, DbOrder>(createRequest);
+            _context.Orders.Add(dbOrder);
 
             await _context.SaveChangesAsync();
 
-            return Mapper.Map<Hive>(dbHive);
+            return Mapper.Map<Order>(dbOrder);
         }
 
         /// <inheritdoc/>
-        public async Task<Order> UpdateOrderAsync(int hiveId, UpdateOrderRequest updateRequest)
+        public async Task<Order> UpdateOrderAsync(int orderId, UpdateOrderRequest updateRequest)
         {
-            var dbHives = await _context.Hives.Where(p => p.Code == updateRequest.Code && p.Id != hiveId).ToArrayAsync();
-            if (dbHives.Length > 0)
+            var dbOrders = await _context.Orders.Where(p => p.Code == updateRequest.Code && p.Id != orderId).ToArrayAsync();
+            if (dbOrders.Length > 0)
             {
                 throw new RequestedResourceHasConflictException("code");
             }
 
-            dbHives = await _context.Hives.Where(p => p.Id == hiveId).ToArrayAsync();
-            if (dbHives.Length == 0)
+            dbOrders = await _context.Orders.Where(p => p.Id == orderId).ToArrayAsync();
+            if (dbOrders.Length == 0)
             {
                 throw new RequestedResourceNotFoundException();
             }
 
-            var dbHive = dbHives[0];
+            var dbOrder = dbOrders[0];
 
-            Mapper.Map(updateRequest, dbHive);
-            dbHive.LastUpdatedBy = _userContext.UserId;
+            Mapper.Map(updateRequest, dbOrder);
 
             await _context.SaveChangesAsync();
 
-            return Mapper.Map<Hive>(dbHive);
+            return Mapper.Map<Order>(dbOrder);
         }
 
         /// <inheritdoc/>
-        public async Task DeleteOrderAsync(int hiveId)
+        public async Task DeleteOrderAsync(int orderId)
         {
-            var dbHives = await _context.Hives.Where(p => p.Id == hiveId).ToArrayAsync();
-            if (dbHives.Length == 0)
+            var dbOrders = await _context.Orders.Where(p => p.Id == orderId).ToArrayAsync();
+            if (dbOrders.Length == 0)
             {
                 throw new RequestedResourceNotFoundException();
             }
 
-            var dbHive = dbHives[0];
-            if (dbHive.IsDeleted == false)
+            var dbOrder = dbOrders[0];
+            if (dbOrder.IsDeleted == false)
             {
                 throw new RequestedResourceHasConflictException();
             }
 
-            _context.Hives.Remove(dbHive);
+            _context.Orders.Remove(dbOrder);
             await _context.SaveChangesAsync();
         }
 
         /// <inheritdoc/>
-        public async Task SetStatusAsync(int hiveId, bool deletedStatus)
+        public async Task SetStatusAsync(int orderId, bool deletedStatus)
         {
-            var dbHives = await _context.Hives.Where(h => h.Id == hiveId).ToArrayAsync();
+            var dbOrders = await _context.Orders.Where(h => h.Id == orderId).ToArrayAsync();
 
-            if (dbHives.Length == 0)
+            if (dbOrders.Length == 0)
             {
                 throw new RequestedResourceNotFoundException();
             }
 
-            var dbHive = dbHives[0];
-            if (dbHive.IsDeleted != deletedStatus)
+            var dbOrder = dbOrders[0];
+            if (dbOrder.IsDeleted != deletedStatus)
             {
-                dbHive.IsDeleted = deletedStatus;
-                dbHive.LastUpdated = DateTime.UtcNow;
-                dbHive.LastUpdatedBy = _userContext.UserId;
+                dbOrder.IsDeleted = deletedStatus;
+                dbOrder.LastUpdated = DateTime.UtcNow;
+                dbOrder.LastUpdatedBy = _userContext.UserId;
                 await _context.SaveChangesAsync();
             }
         }
