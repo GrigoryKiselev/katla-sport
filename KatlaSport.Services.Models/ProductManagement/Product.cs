@@ -16,6 +16,11 @@
         public string Description { get; set; }
 
         /// <summary>
+        /// Gets or sets a product description.
+        /// </summary>
+        public string Description1 { get; set; }
+
+        /// <summary>
         /// Gets or sets a product manufacturer code.
         /// </summary>
         public string ManufacturerCode { get; set; }
