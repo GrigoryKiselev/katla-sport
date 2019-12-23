@@ -21,10 +21,10 @@ namespace KatlaSport.WebApi.Controllers
         private readonly IOrderService _orderService;
         private readonly ITransactionService _transactionService;
 
-        public OrdersController(IOrderService hiveService, ITransactionService hiveSectionService)
+        public OrdersController(IOrderService orderService, ITransactionService transactionService)
         {
-            _orderService = hiveService ?? throw new ArgumentNullException(nameof(hiveService));
-            _transactionService = hiveSectionService ?? throw new ArgumentNullException(nameof(hiveSectionService));
+            _orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
+            _transactionService = transactionService ?? throw new ArgumentNullException(nameof(transactionService));
         }
 
         [HttpGet]
@@ -50,7 +50,7 @@ namespace KatlaSport.WebApi.Controllers
 
         [HttpGet]
         [Route("{orderId:int:min(1)}/transactions")]
-        [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a list of transactions for specified hive.", Type = typeof(TransactionListItem))]
+        [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a list of transactions for specified order.", Type = typeof(TransactionListItem))]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> GetTransactions(int orderId)
@@ -76,7 +76,7 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest)]
         [SwaggerResponse(HttpStatusCode.Conflict)]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> AddHive([FromBody] UpdateOrderRequest createRequest)
+        public async Task<IHttpActionResult> AddOrder([FromBody] UpdateOrderRequest createRequest)
         {
             if (!ModelState.IsValid)
             {
