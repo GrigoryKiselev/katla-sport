@@ -31,14 +31,14 @@ const routes: Routes = [
   { path: 'hive/:id/sections', component: HiveSectionListComponent },
   { path: 'section/:id', component: HiveSectionFormComponent },
   { path: 'hive/:hiveId/section/:id', component: HiveSectionFormComponent},
-  /*{ path: 'hive/:hiveId/section', component: HiveSectionFormComponent},
+  { path: 'hive/:hiveId/section', component: HiveSectionFormComponent},
   { path: 'orders', component: OrderListComponent },
   { path: 'order', component: OrderFormComponent },
   { path: 'order/:id', component: OrderFormComponent },
   { path: 'order/:id/transactions', component: TransactionListComponent },
   { path: 'transaction/:id', component: TransactionFormComponent },
   { path: 'order/:orderId/transaction/:id', component: TransactionFormComponent},
-  { path: 'order/:orderId/transaction', component: TransactionFormComponent}*/
+  { path: 'order/:orderId/transaction', component: TransactionFormComponent}
 ]
 
 @NgModule({

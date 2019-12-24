@@ -6,7 +6,7 @@ import { Hive } from '../models/hive';
 @Component({
   selector: 'app-hive-form',
   templateUrl: './hive-form.component.html',
-  styleUrls: ['./hive-form.component.css']
+  styleUrls: ['./hive-form.component.css'] 
 })
 export class HiveFormComponent implements OnInit {
 

@@ -1,0 +1,46 @@
+<div class="container">
+    <h2>Transactions for Order</h2>
+    <table class="table table-striped">
+        <thead>
+            <th scope="col">ID</th>
+            <th scope="col">BankAccountId</th>
+            <th scope="col">PaymentDate</th>
+            <th scope="col">TotalSumm</th>
+            <th scope="col">StoreOrderId</th>
+            <th scope="col">ActionButtons</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let transaction of transactions">
+                <th scope="row">{{transaction.transactionId}}</th>
+                <th scope="row">{{transaction.bankAccountId}}</th>
+                <th scope="row">{{transaction.paymentDate}}</th>
+                <th scope="row">{{transaction.totalSumm}}</th>
+                <th scope="row">{{transaction.storeOrderId}}</th>
+                <td>
+                    <span class="btn-toolbar" role="toolbar" aria-label="Transaction action buttons" style="display: block; white-space:nowrap;">
+                        <div class="btn-group mr-2" role="group" aria-label="Delete group" *ngIf="!transaction.isDeleted" (click)="onDelete(transaction.transactionId)">
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </div>
+                        <div class="btn-group mr-2" role="group" aria-label="Delete group" *ngIf="transaction.isDeleted" (click)="onUndelete(transaction.transactionId)">
+                            <button type="button" class="btn btn-danger">Undelete</button>
+                        </div>
+                        <div class="btn-group" role="group" aria-label="Edit group">
+                            <button routerLink="/order/{{this.orderId}}/transaction/{{transaction.transactionId}}" type="button" class="btn btn-primary">Edit</button>
+                        </div>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="btn-toolbar" role="toolbar" aria-label="Action buttons">
+        <div class="btn-group mr-1" role="group" aria-label="Back group">
+            <button routerLink="/orders" type="button" class="btn btn-primary">Back</button>
+        </div>
+        <div class="btn-group" role="group" aria-label="Add group">
+            <button routerLink="/order/{{this.orderId}}/transaction" type="button" class="btn btn-primary">Add transaction</button>
+        </div>
+    </div>
+  </div>
+  
+  
+  

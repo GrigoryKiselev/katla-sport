@@ -1,37 +1,37 @@
 <div class="container">
-    <h2>Hive Editor</h2>
-    <form (ngSubmit)="onSubmit()" #hiveForm="ngForm">
+    <h2>Order Editor</h2>
+    <form (ngSubmit)="onSubmit()" #orderForm="ngForm">
         <div class="form-group" *ngIf='existed'>
             <label for="idLabel">ID</label>
-            <input type="text" class="form-control" id="id" aria-describedby="idLabel" [(ngModel)]="hive.id" name="id" #id="ngModel" readonly>
+            <input type="text" class="form-control" id="id" aria-describedby="idLabel" [(ngModel)]="order.id" name="id" #id="ngModel" readonly>
         </div>
         <div class="form-group">
-            <label for="name" id="nameLabel">Hive Name</label>
-            <input type="text" class="form-control" id="name" aria-describedby="nameLabel" minlength="4" maxlength="60" required [(ngModel)]="hive.name" name="name" #name="ngModel">
+            <label for="code" id="codeLabel">Order Code</label>
+            <input type="text" class="form-control" id="code" aria-describedby="nameLabel" minlength="5" maxlength="6" required [(ngModel)]="order.code" name="code" #code="ngModel">
             <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-                <div *ngIf="name.errors.required">Hive Name is required.</div>
-                <div *ngIf="name.errors.minlength">Hive Name must be at least 4 characters long.</div>
+                <div *ngIf="name.errors.required">Order Code is required.</div>
+                <div *ngIf="name.errors.minlength">Order Code must be 5 characters long.</div>
             </div>
         </div>
         <div class="form-group">
-            <label for="code" id="codeLabel">Hive Code</label>
-            <input type="text" class="form-control" id="code" aria-describedby="nameLabel" minlength="5" maxlength="5" required [(ngModel)]="hive.code" name="code" #code="ngModel">
+            <label for="transactionId" id="transactionIdLabel">Transaction ID</label>
+            <input type="text" class="form-control" id="transactionId" aria-describedby="transactionIdLabel" minlength="1" maxlength="300" required [(ngModel)]="order.transactionId" name="transactionId" #name="ngModel">
             <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-                <div *ngIf="name.errors.required">Hive Code is required.</div>
-                <div *ngIf="name.errors.minlength">Hive Code must be 5 characters long.</div>
+                <div *ngIf="name.errors.required">TransactionId is required.</div>
+                <div *ngIf="name.errors.minlength">TransactionId mustn't be more then 300 characters long.</div>
             </div>
         </div>
         <div class="form-group">
-            <label for="address" id="addressLabel">Hive Address</label>
-            <input type="text" class="form-control" id="address" aria-describedby="addressLabel" minlength="4" maxlength="300" required [(ngModel)]="hive.address" name="address" #name="ngModel">
+            <label for="price" id="priceLabel">Order Price</label>
+            <input type="text" class="form-control" id="price" aria-describedby="priceLabel" minlength="1" maxlength="10" required [(ngModel)]="order.price" name="price" #name="ngModel">
             <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-                <div *ngIf="name.errors.required">Hive Address is required.</div>
-                <div *ngIf="name.errors.minlength">Hive Address mustn't be more then 300 characters long.</div>
+                <div *ngIf="name.errors.required">Order Price is required.</div>
+                <div *ngIf="name.errors.minlength">Order Price mustn't be more then 10 characters long.</div>
             </div>
         </div>
         <div class="form-group" *ngIf='existed'>
             <label for="lastUpdated" id="lastUpdatedLabel">Last Update</label>
-            <input type="text" class="form-control" id="lastUpdated" aria-describedby="lastUpdatedLabel" required [(ngModel)]="hive.lastUpdated" name="lastUpdated" #lastUpdated="ngModel" readonly>
+            <input type="text" class="form-control" id="lastUpdated" aria-describedby="lastUpdatedLabel" required [(ngModel)]="order.lastUpdated" name="lastUpdated" #lastUpdated="ngModel" readonly>
         </div>
         <div class="btn-toolbar" role="toolbar" aria-label="Action buttons">
             <div class="btn-group mr-1" role="group" aria-label="Cancel group">
@@ -40,10 +40,10 @@
             <div class="btn-group mr-4" role="group" aria-label="Save group">
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
-            <div class="btn-group mr-1" role="group" aria-label="Delete group" *ngIf="existed && !hive.isDeleted">
+            <div class="btn-group mr-1" role="group" aria-label="Delete group" *ngIf="existed && !order.isDeleted">
                 <button type="button" class="btn btn-warning" (click)="onDelete()">Delete</button>
             </div>
-            <div class="btn-group" role="group" aria-label="Purge group" *ngIf="existed && hive.isDeleted">
+            <div class="btn-group" role="group" aria-label="Purge group" *ngIf="existed && order.isDeleted">
                 <button type="button" class="btn btn-warning" (click)="onUndelete()">Undelete</button>
                 <button type="button" class="btn btn-danger" (click)="onPurge()">Purge</button>
             </div>
