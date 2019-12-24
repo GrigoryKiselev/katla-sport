@@ -66,9 +66,16 @@ namespace KatlaSport.Services.OrderManagement
             }
 
             var dbTransaction = Mapper.Map<UpdateTransactionRequest, DbTransaction>(createRequest);
+            var order = _context.Orders.Where(o => o.Id == dbTransaction.StoreOrderId).First();
+            dbTransaction.StoreOrder = order;
             _context.Transactions.Add(dbTransaction);
-
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e){
+                throw;
+            }
 
             return Mapper.Map<Transaction>(dbTransaction);
         }

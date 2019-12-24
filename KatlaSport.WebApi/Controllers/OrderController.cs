@@ -84,7 +84,7 @@ namespace KatlaSport.WebApi.Controllers
             }
 
             var order = await _orderService.CreateOrderAsync(createRequest);
-            var location = string.Format("/api/order/{0}", order.OrderId);
+            var location = string.Format("/api/order/{0}", order.Id);
             return Created<Order>(location, order);
         }
 

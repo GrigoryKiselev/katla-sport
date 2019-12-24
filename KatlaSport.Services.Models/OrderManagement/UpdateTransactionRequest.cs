@@ -19,5 +19,10 @@
         /// Gets or sets transaction id.
         /// </summary>
         public int TotalSumm { get; set; }
+
+        /// <summary>
+        /// Gets or sets transaction id.
+        /// </summary>
+        public int StoreOrderId { get; set; }
     }
 }

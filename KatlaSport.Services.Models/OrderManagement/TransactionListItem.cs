@@ -28,5 +28,10 @@ namespace KatlaSport.Services.OrderManagement
         /// Gets or sets a value indicating whether a hive is deleted.
         /// </summary>
         public bool IsDeleted { get; set; }
+
+        /// <summary>
+        /// Gets or sets transaction id.
+        /// </summary>
+        public int StoreOrderId { get; set; }
     }
 }

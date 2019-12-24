@@ -8,7 +8,7 @@
         /// <summary>
         /// Gets or sets order identifier.
         /// </summary>
-        public int OrderId { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets a store hive code.

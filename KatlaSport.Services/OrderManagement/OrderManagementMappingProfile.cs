@@ -15,7 +15,8 @@ namespace KatlaSport.Services.OrderManagement
             CreateMap<DataAccessTransaction, Transaction>();
             CreateMap<UpdateOrderRequest, DataAccessOrder>()
             .ForMember(r => r.LastUpdated, opt => opt.MapFrom(p => DateTime.UtcNow));
-            CreateMap<UpdateTransactionRequest, DataAccessTransaction>();
+            CreateMap<UpdateTransactionRequest, DataAccessTransaction>()
+            .ForMember(r => r.PaymentDate, opt => opt.MapFrom(p => DateTime.UtcNow));
         }
     }
 }

@@ -11,6 +11,12 @@ import { HiveListComponent } from 'app/hive-management/lists/hive-list.component
 import { HiveSectionListComponent } from 'app/hive-management/lists/hive-section-list.component';
 import { HiveSectionService } from 'app/hive-management/services/hive-section.service';
 import { HiveService } from 'app/hive-management/services/hive.service';
+import { OrderFormComponent } from 'app/order-management/forms/order-form.component';
+import { TransactionFormComponent } from 'app/order-management/forms/transaction-form.component';
+import { OrderListComponent } from 'app/order-management/lists/order-list.component';
+import { TransactionListComponent } from 'app/order-management/lists/transaction-list.component';
+import { TransactionService } from 'app/order-management/services/transaction.service';
+import { OrderService } from 'app/order-management/services/order.service';
 import { MainPageComponent } from 'app/main-page/main-page.component';
 import { ProductCategoryFormComponent } from 'app/product-management/forms/product-category-form.component';
 import { ProductFormComponent } from 'app/product-management/forms/product-form.component';
@@ -33,6 +39,10 @@ import { ProductService } from 'app/product-management/services/product.service'
     HiveFormComponent,
     HiveSectionFormComponent,
     HiveSectionListComponent,
+    /*OrderFormComponent,
+    /*TransactionFormComponent,
+    OrderListComponent,
+    TransactionListComponent,*/
   ],
   imports: [
     // Angular imports
@@ -50,7 +60,9 @@ import { ProductService } from 'app/product-management/services/product.service'
     ProductService,
     ProductCategoryService,
     HiveService,
-    HiveSectionService,
+    HiveSectionService/*,
+  /*  OrderService,
+    TransactionService,*/
   ],
   bootstrap: [AppComponent]
 })
