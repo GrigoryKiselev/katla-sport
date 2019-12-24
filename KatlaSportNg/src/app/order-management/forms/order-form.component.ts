@@ -4,13 +4,13 @@ import { OrderService } from '../services/order.service';
 import { Order } from '../models/order';
 
 @Component({
-  selector: 'app-order-form'/*,
-  templateUrl: './order-form.component.html'*/
+  selector: 'app-order-form',
+  templateUrl: './order-form-component.html'
 })
 export class OrderFormComponent implements OnInit {
 
   order = new Order(0, "", "", "", 0, false);
-  existed = false;
+  existed = false; 
 
   constructor(
     private route: ActivatedRoute,

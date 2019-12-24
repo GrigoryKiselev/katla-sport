@@ -39,10 +39,10 @@ import { ProductService } from 'app/product-management/services/product.service'
     HiveFormComponent,
     HiveSectionFormComponent,
     HiveSectionListComponent,
-    /*OrderFormComponent,
-    /*TransactionFormComponent,
+    OrderFormComponent,
+    TransactionFormComponent,
     OrderListComponent,
-    TransactionListComponent,*/
+    TransactionListComponent
   ],
   imports: [
     // Angular imports
@@ -60,9 +60,9 @@ import { ProductService } from 'app/product-management/services/product.service'
     ProductService,
     ProductCategoryService,
     HiveService,
-    HiveSectionService/*,
-  /*  OrderService,
-    TransactionService,*/
+    HiveSectionService,
+    OrderService,
+    TransactionService
   ],
   bootstrap: [AppComponent]
 })

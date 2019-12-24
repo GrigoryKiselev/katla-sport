@@ -4,8 +4,8 @@ import { Transaction } from '../models/transaction';
 import { TransactionService } from '../services/transaction.service';
 
 @Component({
-  selector: 'app-transaction-form'/*,
-  templateUrl: './transaction-form.component.html' */
+  selector: 'app-transaction-form',
+  templateUrl: './transaction-form-component.html' 
 })
 export class TransactionFormComponent implements OnInit {
   public transaction = new Transaction(0, "", "", "", 0, false);
