@@ -73,8 +73,14 @@
     <Compile Include="HiveManagement\UpdateHiveRequestValidator.cs" />
     <Compile Include="HiveManagement\UpdateHiveSectionRequest.cs" />
     <Compile Include="HiveManagement\UpdateHiveSectionRequestValidator.cs" />
-    <Compile Include="OrderManagment\Order.cs" />
-    <Compile Include="OrderManagment\Transaction.cs" />
+    <Compile Include="OrderManagement\IOrderService.cs" />
+    <Compile Include="OrderManagement\ITransactionService.cs" />
+    <Compile Include="OrderManagement\Order.cs" />
+    <Compile Include="OrderManagement\OrderListItem.cs" />
+    <Compile Include="OrderManagement\Transaction.cs" />
+    <Compile Include="OrderManagement\TransactionListItem.cs" />
+    <Compile Include="OrderManagement\UpdateOrderRequest.cs" />
+    <Compile Include="OrderManagement\UpdateTransactionRequest.cs" />
     <Compile Include="ProductManagement\IProductCatalogueService.cs" />
     <Compile Include="ProductManagement\IProductCategoryService.cs" />
     <Compile Include="ProductManagement\Product.cs" />

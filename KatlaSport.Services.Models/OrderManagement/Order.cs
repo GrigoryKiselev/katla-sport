@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace KatlaSport.DataAccess.OrderStore
+namespace KatlaSport.Services.OrderManagement
 {
-    public class StoreOrder
+    public class Order
     {
         /// <summary>
         /// Gets or sets order identifier.
@@ -34,10 +33,5 @@ namespace KatlaSport.DataAccess.OrderStore
         /// Gets or sets a value indicating whether a hive is deleted.
         /// </summary>
         public bool IsDeleted { get; set; }
-
-        /// <summary>
-        /// Gets or sets a collection of sections for the store hive.
-        /// </summary>
-        public virtual ICollection<StoreTransaction> Transactions { get; set; }
     }
 }

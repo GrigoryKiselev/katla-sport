@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# SA1648: inheritdoc must be used with inheriting class
+dotnet_diagnostic.SA1648.severity = none

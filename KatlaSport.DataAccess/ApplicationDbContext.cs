@@ -1,13 +1,14 @@
-﻿using System.Data.Entity;
-using System.Reflection;
-using KatlaSport.DataAccess.CustomerCatalogue;
-using KatlaSport.DataAccess.Migrations;
-using KatlaSport.DataAccess.ProductCatalogue;
-using KatlaSport.DataAccess.ProductStore;
-using KatlaSport.DataAccess.ProductStoreHive;
-
-namespace KatlaSport.DataAccess
+﻿namespace KatlaSport.DataAccess
 {
+    using System.Data.Entity;
+    using System.Reflection;
+    using KatlaSport.DataAccess.CustomerCatalogue;
+    using KatlaSport.DataAccess.Migrations;
+    using KatlaSport.DataAccess.OrderStore;
+    using KatlaSport.DataAccess.ProductCatalogue;
+    using KatlaSport.DataAccess.ProductStore;
+    using KatlaSport.DataAccess.ProductStoreHive;
+
     /// <summary>
     /// Represents an application database context.
     /// </summary>
@@ -68,6 +69,16 @@ namespace KatlaSport.DataAccess
         /// Gets or sets a <see cref="DbSet"/> for <see cref="Customer"/>.
         /// </summary>
         public DbSet<Customer> Customers { get; set; }
+
+        /// <summary>
+        /// Gets or sets a <see cref="DbSet"/> for <see cref="StoreOrder"/>.
+        /// </summary>
+        public DbSet<StoreOrder> StoreOrders { get; set; }
+
+        /// <summary>
+        /// Gets or sets a <see cref="DbSet"/> for <see cref="StoreOrder"/>.
+        /// </summary>
+        public DbSet<StoreTransaction> StoreTransactions { get; set; }
 
         /// <summary>
         /// Overrides base method.

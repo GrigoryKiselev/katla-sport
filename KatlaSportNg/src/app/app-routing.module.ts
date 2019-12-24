@@ -10,6 +10,10 @@ import { ProductFormComponent } from './product-management/forms/product-form.co
 import { ProductCategoryListComponent } from './product-management/lists/product-category-list.component';
 import { ProductCategoryProductListComponent } from './product-management/lists/product-category-product-list.component';
 import { ProductListComponent } from './product-management/lists/product-list.component';
+import { OrderFormComponent } from './order-management/forms/order-form.component';
+import { TransactionFormComponent } from './order-management/forms/transaction-form.component';
+import { OrderListComponent } from './order-management/lists/order-list.component';
+import { TransactionListComponent } from './order-management/lists/transaction-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/main', pathMatch: 'full' },
@@ -27,7 +31,14 @@ const routes: Routes = [
   { path: 'hive/:id/sections', component: HiveSectionListComponent },
   { path: 'section/:id', component: HiveSectionFormComponent },
   { path: 'hive/:hiveId/section/:id', component: HiveSectionFormComponent},
-  { path: 'hive/:hiveId/section', component: HiveSectionFormComponent}
+  /*{ path: 'hive/:hiveId/section', component: HiveSectionFormComponent},
+  { path: 'orders', component: OrderListComponent },
+  { path: 'order', component: OrderFormComponent },
+  { path: 'order/:id', component: OrderFormComponent },
+  { path: 'order/:id/transactions', component: TransactionListComponent },
+  { path: 'transaction/:id', component: TransactionFormComponent },
+  { path: 'order/:orderId/transaction/:id', component: TransactionFormComponent},
+  { path: 'order/:orderId/transaction', component: TransactionFormComponent}*/
 ]
 
 @NgModule({

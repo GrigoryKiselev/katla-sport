@@ -1,18 +1,14 @@
-﻿using System;
-
-namespace KatlaSport.Services.OrderManagment
+﻿namespace KatlaSport.Services.OrderManagement
 {
-    public class Order
+    /// <summary>
+    /// Represents a request for creating and updating a hive.
+    /// </summary>
+    public class UpdateOrderRequest
     {
         /// <summary>
-        /// Gets or sets order identifier.
-         /// </summary>
-        public int OrderId { get; set; }
-
-        /// <summary>
-        /// Gets or sets a date of the order.
+        /// Gets or sets a store hive code.
         /// </summary>
-        public DateTime LastUpdated { get; set; }
+        public string Code { get; set; }
 
         /// <summary>
         /// Gets or sets transaction id.

@@ -19,5 +19,10 @@
         /// Gets or sets a store hive address.
         /// </summary>
         public string Address { get; set; }
+
+        /// <summary>
+        /// Gets or sets a store hive address.
+        /// </summary>
+        public string StoreOrderId { get; set; }
     }
 }
