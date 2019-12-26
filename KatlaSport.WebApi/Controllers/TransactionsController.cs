@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using KatlaSport.Services;
 using KatlaSport.Services.OrderManagement;
 using KatlaSport.WebApi.CustomFilters;
 using Microsoft.Web.Http;
@@ -18,11 +19,11 @@ namespace KatlaSport.WebApi.Controllers
     [SwaggerResponseRemoveDefaults]
     public class TransactionsController : ApiController
     {
-        private readonly ITransactionService _transactionService;
+        private readonly IRepository<Transaction> _transactionRepositoryService;
 
-        public TransactionsController(ITransactionService transactionService)
+        public TransactionsController(IRepository<Transaction> transactionRepositoryService)
         {
-            _transactionService = transactionService ?? throw new ArgumentNullException(nameof(transactionService));
+            _transactionRepositoryService = transactionRepositoryService ?? throw new ArgumentNullException(nameof(transactionRepositoryService));
         }
 
         [HttpGet]
@@ -31,8 +32,8 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> GetTransactionsAsync()
         {
-            var orders = await _transactionService.GetTransactionsAsync();
-            return Ok(orders);
+            var transactions = await _transactionRepositoryService.GetAllAsync();
+            return Ok(transactions);
         }
 
         [HttpGet]
@@ -42,8 +43,8 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> GetTransactionAsync(int transactionId)
         {
-            var order = await _transactionService.GetTransactionAsync(transactionId);
-            return Ok(order);
+            var transaction = await _transactionRepositoryService.GetAsync(transactionId);
+            return Ok(transaction);
         }
 
         [HttpPost]
@@ -59,7 +60,7 @@ namespace KatlaSport.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var transaction = await _transactionService.CreateTransactionAsync(createRequest);
+            var transaction = await _transactionRepositoryService.CreateTransactionAsync(createRequest);
             var location = string.Format("/api/sections/{0}", transaction.TransactionId);
             return Created<Transaction>(location, transaction);
         }
