@@ -74,5 +74,22 @@ namespace KatlaSport.Services.OrderManagement
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task SetStatusAsync(int id, bool deletedStatus)
+        {
+            var dbTransactions = await _context.Transactions.Where(h => id == h.TransactionId).ToArrayAsync();
+
+            if (dbTransactions.Length == 0)
+            {
+                throw new RequestedResourceNotFoundException();
+            }
+
+            var dbTransaction = dbTransactions[0];
+            if (dbTransaction.IsDeleted != deletedStatus)
+            {
+                dbTransaction.IsDeleted = deletedStatus;
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

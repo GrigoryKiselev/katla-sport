@@ -15,5 +15,7 @@ namespace KatlaSport.Services
         Task UpdateAsync(TEntity entity);
 
         Task RemoveAsync(TEntity entity);
+
+        Task SetStatusAsync(int id, bool status);
     }
 }

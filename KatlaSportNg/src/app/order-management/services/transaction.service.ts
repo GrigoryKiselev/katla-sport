@@ -14,27 +14,27 @@ export class TransactionService {
   constructor(private http: HttpClient) { }
 
   getTransactions(): Observable<Array<TransactionListItem>> {
-    return this.http.get<Array<TransactionListItem>>(this.url);
+    return this.http.get<Array<TransactionListItem>>(`${this.url}getAll`);
   }
 
   getTransaction(transactionId: number): Observable<Transaction> {
-    return this.http.get<Transaction>(`${this.url}${transactionId}`);
+    return this.http.get<Transaction>(`${this.url}getOne/${transactionId}`);
   }
 
   addTransaction(transaction: Transaction): Observable<Transaction> {
-    return this.http.post<Transaction>(this.url, transaction);
+    return this.http.post<Transaction>(`${this.url}create`,transaction);
   }
 
   updateTransaction (transaction: Transaction): Observable<Transaction> {
-    return this.http.put<Transaction>(`${this.url}${transaction.transactionId}`, transaction);
+    return this.http.post<Transaction>(`${this.url}update/${transaction.transactionId}`,transaction);
   }
 
   deleteTransaction(transactionId: number): Observable<Object> {
-    return this.http.delete<Object>(`${this.url}${transactionId}`);
+    return this.http.post<Object>(`${this.url}delete/${transactionId}`,null);
   }
 
   setTransactionStatus(transactionId: number, deletedStatus: boolean): Observable<Object> {
-    return this.http.put<Transaction>(`${this.url}${transactionId}/status/${deletedStatus}`, null);
+    return this.http.post<Transaction>(`${this.url}setStatus/${transactionId}/status/${deletedStatus}`, null);
   }
 }
 
