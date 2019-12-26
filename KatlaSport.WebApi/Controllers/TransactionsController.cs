@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using KatlaSport.Services;
 using KatlaSport.Services.OrderManagement;
 using KatlaSport.WebApi.CustomFilters;
+using Microsoft.ApplicationInsights;
 using Microsoft.Web.Http;
 using Swashbuckle.Swagger.Annotations;
 
@@ -18,72 +21,81 @@ namespace KatlaSport.WebApi.Controllers
     [SwaggerResponseRemoveDefaults]
     public class TransactionsController : ApiController
     {
-        private readonly ITransactionService _transactionService;
+        private readonly IRepository<Transaction> _transactionRepositoryService;
+        private TelemetryClient TelemetryClient = new TelemetryClient();
 
-        public TransactionsController(ITransactionService transactionService)
+        public TransactionsController(IRepository<Transaction> transactionRepositoryService)
         {
-            _transactionService = transactionService ?? throw new ArgumentNullException(nameof(transactionService));
+            _transactionRepositoryService = transactionRepositoryService ?? throw new ArgumentNullException(nameof(transactionRepositoryService));
+            TelemetryClient.TrackEvent("Twitter-like API");
         }
 
         [HttpGet]
-        [Route("")]
+        [Route("getAll")]
         [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a list of transactions.", Type = typeof(TransactionListItem[]))]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> GetTransactionsAsync()
         {
-            var orders = await _transactionService.GetTransactionsAsync();
-            return Ok(orders);
+            TelemetryClient.TrackEvent("Get all Transactions");
+
+            var transactions = await _transactionRepositoryService.GetAllAsync();
+            return Ok(transactions);
         }
 
         [HttpGet]
-        [Route("{transactionId:int:min(1)}")]
+        [Route("getOne/{transactionId:int:min(1)}")]
         [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a transaction.", Type = typeof(Transaction))]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> GetTransactionAsync(int transactionId)
         {
-            var order = await _transactionService.GetTransactionAsync(transactionId);
-            return Ok(order);
+            var transaction = await _transactionRepositoryService.GetAsync(transactionId);
+            return Ok(transaction);
         }
 
         [HttpPost]
-        [Route("")]
+        [Route("create")]
         [SwaggerResponse(HttpStatusCode.Created, Description = "Creates a new transaction.")]
         [SwaggerResponse(HttpStatusCode.BadRequest)]
         [SwaggerResponse(HttpStatusCode.Conflict)]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> AddTransaction([FromBody] UpdateTransactionRequest createRequest)
+        public async Task<IHttpActionResult> AddTransaction([FromBody] Transaction createRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var transaction = await _transactionService.CreateTransactionAsync(createRequest);
-            var location = string.Format("/api/sections/{0}", transaction.TransactionId);
+            await _transactionRepositoryService.AddAsync(createRequest);
+            var transactions = await _transactionRepositoryService.GetAllAsync();
+            var transaction = transactions.Last();
+            var location = string.Format("/api/transactions/getOne/{0}", transaction.TransactionId);
             return Created<Transaction>(location, transaction);
         }
 
-        [HttpPut]
-        [Route("{id:int:min(1)}")]
+        [HttpPost]
+        [Route("update/{id:int:min(1)}")]
         [SwaggerResponse(HttpStatusCode.NoContent, Description = "Updates an existed transaction.")]
         [SwaggerResponse(HttpStatusCode.BadRequest)]
         [SwaggerResponse(HttpStatusCode.Conflict)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> UpdateTransaction([FromUri] int id, [FromBody] UpdateTransactionRequest updateRequest)
+        public async Task<IHttpActionResult> UpdateTransaction([FromUri] int id, [FromBody] Transaction updateRequest)
         {
+            TelemetryClient.TrackEvent($"update transaction with {id} id");
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            await _transactionService.UpdateTransactionAsync(id, updateRequest);
+            updateRequest.TransactionId = id;
+            await _transactionRepositoryService.UpdateAsync(updateRequest);
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
         }
 
-        [HttpDelete]
-        [Route("{id:int:min(1)}")]
+        [HttpPost]
+        [Route("delete/{id:int:min(1)}")]
         [SwaggerResponse(HttpStatusCode.NoContent, Description = "Deletes an existed transacction.")]
         [SwaggerResponse(HttpStatusCode.BadRequest)]
         [SwaggerResponse(HttpStatusCode.Conflict)]
@@ -91,18 +103,20 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> DeleteTransaction([FromUri] int id)
         {
-            await _transactionService.DeleteTransactionAsync(id);
+            TelemetryClient.TrackEvent($"delete transaction with {id} id");
+
+            await _transactionRepositoryService.RemoveAsync(new Transaction() { TransactionId = id });
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
         }
 
-        [HttpPut]
-        [Route("{transactionId:int:min(1)}/status/{deletedStatus:bool}")]
+        [HttpPost]
+        [Route("setStatus/{transactionId:int:min(1)}/status/{deletedStatus:bool}")]
         [SwaggerResponse(HttpStatusCode.NoContent, Description = "Sets deleted status for an existed transaction.")]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> SetStatus([FromUri] int transactionId, [FromUri] bool deletedStatus)
         {
-            await _transactionService.SetStatusAsync(transactionId, deletedStatus);
+            await _transactionRepositoryService.SetStatusAsync(transactionId, deletedStatus);
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
         }
     }
