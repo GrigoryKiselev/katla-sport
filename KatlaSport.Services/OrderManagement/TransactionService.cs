@@ -73,7 +73,8 @@ namespace KatlaSport.Services.OrderManagement
             {
                 await _context.SaveChangesAsync();
             }
-            catch (Exception e){
+            catch (Exception e)
+            {
                 throw;
             }
 
