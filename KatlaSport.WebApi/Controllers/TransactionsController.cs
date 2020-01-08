@@ -8,7 +8,6 @@ using System.Web.Http.Cors;
 using KatlaSport.Services;
 using KatlaSport.Services.OrderManagement;
 using KatlaSport.WebApi.CustomFilters;
-using Microsoft.ApplicationInsights;
 using Microsoft.Web.Http;
 using Swashbuckle.Swagger.Annotations;
 
@@ -22,12 +21,10 @@ namespace KatlaSport.WebApi.Controllers
     public class TransactionsController : ApiController
     {
         private readonly IRepository<Transaction> _transactionRepositoryService;
-        private TelemetryClient TelemetryClient = new TelemetryClient();
 
         public TransactionsController(IRepository<Transaction> transactionRepositoryService)
         {
             _transactionRepositoryService = transactionRepositoryService ?? throw new ArgumentNullException(nameof(transactionRepositoryService));
-            TelemetryClient.TrackEvent("Twitter-like API");
         }
 
         [HttpGet]
@@ -36,8 +33,6 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> GetTransactionsAsync()
         {
-            TelemetryClient.TrackEvent("Get all Transactions");
-
             var transactions = await _transactionRepositoryService.GetAllAsync();
             return Ok(transactions);
         }
@@ -82,8 +77,6 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> UpdateTransaction([FromUri] int id, [FromBody] Transaction updateRequest)
         {
-            TelemetryClient.TrackEvent($"update transaction with {id} id");
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -103,8 +96,6 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> DeleteTransaction([FromUri] int id)
         {
-            TelemetryClient.TrackEvent($"delete transaction with {id} id");
-
             await _transactionRepositoryService.RemoveAsync(new Transaction() { TransactionId = id });
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
         }
